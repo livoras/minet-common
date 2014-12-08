@@ -42,6 +42,12 @@ public class Comfy {
 		thread.start();
 	}
 
+	private void  closeAll() throws IOException {
+		System.out.println("Socket closed " + socket.getRemoteSocketAddress());
+		socket.close();
+		in.close();
+	}
+
 	private class CommandWaiter implements Runnable {
 		@Override
 		public void run() {
@@ -49,6 +55,10 @@ public class Comfy {
 				String dataStr;
 				try {
 					dataStr = in.readLine();
+					if (dataStr == null)  {
+						closeAll();
+						return;
+					}
 					JSONObject data = new JSONObject(dataStr);
 					String commandName = data.getString("command");
 					Action action = actionsMap.get(commandName);
