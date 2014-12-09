@@ -42,8 +42,8 @@ public class Comfy {
 		thread.start();
 	}
 
-	private void  closeAll() throws IOException {
-		System.out.println("Socket closed " + socket.getRemoteSocketAddress());
+	public void closeAll() throws IOException {
+		Logger.log("Socket closed " + socket.getRemoteSocketAddress());
 		socket.close();
 		in.close();
 	}
@@ -68,7 +68,7 @@ public class Comfy {
 						new Thread(action).start();
 					} else {
 						// 命令不存在则进行警告，并不报错
-						System.out.println("Command: " + commandName + " is not found!");
+						Logger.log("Command: " + commandName + " is not found!");
 					}
 				} catch (IOException | JSONException e) {
 					;
